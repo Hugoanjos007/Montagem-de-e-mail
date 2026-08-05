@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select, WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 import time as tm
 #==================UTILITARIOS=========================
 relatorio_pesquisa = "http://192.168.15.220/crm/index.php?codmodulo=446"
@@ -26,13 +28,18 @@ def baixar_relatorios():
     snx.get(relatorio_chamadas)
     buscar_botton = snx.find_element("id", "btn_pesquisar")
     buscar_botton.click()
-    tm.sleep(3)
+    tm.sleep(5)
     exportar = snx.find_element("id", "btn_excel")
     exportar.click()
     snx.get(relatorio_sms)
-    agrupar_list = snx.find_element("class name", "jqTransformSelectOpen")
-    agrupar_list.click()
-    index_0 = snx.find_element("index", "0")
-    index_0.click()
+    agrupar = WebDriverWait(snx, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "jqTransformSelectOpen")))
+    agrupar.click()
+    opcao = WebDriverWait(snx, 10).until(EC.element_to_be_clickable((By.XPATH, "//a[@index='0']")))
+    opcao.click()
+    buscar_botton = snx.find_element("id", "btn_pesquisar")
+    buscar_botton.click()
+    tm.sleep(3)
+    exportar = snx.find_element("id", "btn_excel")
+    exportar.click()
     tm.sleep(30)
 baixar_relatorios()
