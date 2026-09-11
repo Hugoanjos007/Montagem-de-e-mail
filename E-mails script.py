@@ -60,3 +60,5 @@ while True:
     seguro_cliente = int(input("Qual o seguro do cliente:\n [0] Multi Bônus\n [1] Bolsa Premiada\n [2] Casa tranquila\n [3] Assistência Saúde\n [4] Auto e Moto\n [5] Assistência Mulher\n [6] Pet Básico\n [7] Pet Completo\n [8] Odonto\n [9] Odonto Plus\nDigite a opção: "))
     email_cliente = email_base()
     salvar_planilha(nome_cliente, cpf_cliente, email_cliente)
+    print("="*60)
+    
