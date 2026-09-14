@@ -3,6 +3,32 @@ from openpyxl import Workbook, load_workbook, workbook
 Seguros = ["Multi Bônus", "Bolsa Premiada", "Casa tranquila", "Assistência Saúde", "Auto e Moto", "Assistência Mulher", "Pet Básico", "Pet Completo", "Odonto", "Odonto Plus"]
 genero = ["M", "F"]
 periodo = ["bom dia", "boa tarde", "boa noite"]
+def email_troca():
+    if genero_cliente == 0:
+        email_cliente = """Victor, {}!
+
+Tudo bem? 
+ 
+Pode verificar por gentileza. 
+Cliente entrou em contato solicitando uma troca de plano da compra do dia {}.  
+Alega que não pediu em {} e pede que seja regularizado, cliente ciente de que já não está no prazo para alteração do parcelamento, mas não aceita essa informação.
+Temos como verificar a possibilidade de realizar a troca por exceção para 1x. 
+ 
+Cliente: {}
+CPF: {}""".format(periodo[periodo_email], data_compra, parcelamento, nome_cliente, cpf_cliente)
+    elif genero_cliente == 1:
+        email_cliente = """Victor, {}!
+
+Tudo bem? 
+ 
+Pode verificar por gentileza. 
+Cliente entrou em contato solicitando uma troca de plano da compra do dia {}.  
+Alega que não pediu em {} e pede que seja regularizado, cliente ciente de que já não está no prazo para alteração do parcelamento, mas não aceita essa informação.
+Temos como verificar a possibilidade de realizar a troca por exceção para 1x. 
+ 
+Cliente: {}
+CPF: {}""".format(periodo[periodo_email], data_compra, parcelamento, nome_cliente, cpf_cliente)
+    return email_cliente
 def email_base():
     if genero_cliente == 0:
         email_cliente = """Victor, {}!
@@ -55,11 +81,22 @@ def salvar_planilha(nome_cliente, cpf_cliente, email_cliente):
     print("E-mail salvo na planilha!")
 while True:
     criar_planilha()
-    nome_cliente = str(input("Digite o nome do cliente: ").strip())
-    cpf_cliente = str(input("Digite o CPF do cliente: ").strip())
-    genero_cliente = int(input("Qual o genero do cliente:\n [0] Masculino\n [1] Feminino\nDigite a opção: "))
-    seguro_cliente = int(input("Qual o seguro do cliente:\n [0] Multi Bônus\n [1] Bolsa Premiada\n [2] Casa tranquila\n [3] Assistência Saúde\n [4] Auto e Moto\n [5] Assistência Mulher\n [6] Pet Básico\n [7] Pet Completo\n [8] Odonto\n [9] Odonto Plus\nDigite a opção: "))
-    periodo_email = int(input("Qual o período do e-mail:\n [0] Bom dia\n [1] Boa tarde\n [2] Boa noite\nDigite a opção: "))
-    email_cliente = email_base()
-    salvar_planilha(nome_cliente, cpf_cliente, email_cliente)
+    caso = int(input("Digite o caso do cliente:\n [0] Estorno de seguro\n [1] Troca de plano\nDigite a opção: "))
+    if caso == 0:
+        nome_cliente = str(input("Digite o nome do cliente: ").strip())
+        cpf_cliente = str(input("Digite o CPF do cliente: ").strip())
+        genero_cliente = int(input("Qual o genero do cliente:\n [0] Masculino\n [1] Feminino\nDigite a opção: "))
+        seguro_cliente = int(input("Qual o seguro do cliente:\n [0] Multi Bônus\n [1] Bolsa Premiada\n [2] Casa tranquila\n [3] Assistência Saúde\n [4] Auto e Moto\n [5] Assistência Mulher\n [6] Pet Básico\n [7] Pet Completo\n [8] Odonto\n [9] Odonto Plus\nDigite a opção: "))
+        periodo_email = int(input("Qual o período do e-mail:\n [0] Bom dia\n [1] Boa tarde\n [2] Boa noite\nDigite a opção: "))
+        email_cliente = email_base()
+        salvar_planilha(nome_cliente, cpf_cliente, email_cliente)
+    elif caso == 1:
+        nome_cliente = str(input("Digite o nome do cliente: ").strip())
+        cpf_cliente = str(input("Digite o CPF do cliente: ").strip())
+        genero_cliente = int(input("Qual o genero do cliente:\n [0] Masculino\n [1] Feminino\nDigite a opção: "))
+        data_compra = str(input("Digite a data da compra (dd/mm/aaaa): ").strip())
+        parcelamento = str(input("Digite o parcelamento solicitado pelo cliente: ").strip())
+        periodo_email = int(input("Qual o período do e-mail:\n [0] Bom dia\n [1] Boa tarde\n [2] Boa noite\nDigite a opção: "))
+        email_cliente = email_troca()
+        salvar_planilha(nome_cliente, cpf_cliente, email_cliente)
     print("="*60)
