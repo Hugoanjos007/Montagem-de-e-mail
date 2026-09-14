@@ -2,9 +2,10 @@ import os
 from openpyxl import Workbook, load_workbook, workbook
 Seguros = ["Multi Bônus", "Bolsa Premiada", "Casa tranquila", "Assistência Saúde", "Auto e Moto", "Assistência Mulher", "Pet Básico", "Pet Completo", "Odonto", "Odonto Plus"]
 genero = ["M", "F"]
+periodo = ["bom dia", "boa tarde", "boa noite"]
 def email_base():
     if genero_cliente == 0:
-        email_cliente = """Victor, boa tarde!
+        email_cliente = """Victor, {}!
 
 Tudo bem? 
 
@@ -16,9 +17,9 @@ Temos como verificar uma possibilidade de estorno do valor gerado por conta do s
 Cliente: {}
 CPF: {}
 
-""".format(Seguros[seguro_cliente], nome_cliente, cpf_cliente)
+""".format(periodo[periodo_email], Seguros[seguro_cliente], nome_cliente, cpf_cliente)
     elif genero_cliente == 1:
-        email_cliente = """Victor, boa tarde!
+        email_cliente = """Victor, {}!
 
 Tudo bem? 
 
@@ -29,7 +30,7 @@ Temos como verificar uma possibilidade de estorno do valor gerado por conta do s
 
 Cliente: {}
 CPF: {}
-""".format(Seguros[seguro_cliente], nome_cliente, cpf_cliente)
+""".format(periodo[periodo_email], Seguros[seguro_cliente], nome_cliente, cpf_cliente)
     return email_cliente
 def criar_planilha():
     email_montado = "emails_montados.xlsx"
@@ -58,7 +59,7 @@ while True:
     cpf_cliente = str(input("Digite o CPF do cliente: ").strip())
     genero_cliente = int(input("Qual o genero do cliente:\n [0] Masculino\n [1] Feminino\nDigite a opção: "))
     seguro_cliente = int(input("Qual o seguro do cliente:\n [0] Multi Bônus\n [1] Bolsa Premiada\n [2] Casa tranquila\n [3] Assistência Saúde\n [4] Auto e Moto\n [5] Assistência Mulher\n [6] Pet Básico\n [7] Pet Completo\n [8] Odonto\n [9] Odonto Plus\nDigite a opção: "))
+    periodo_email = int(input("Qual o período do e-mail:\n [0] Bom dia\n [1] Boa tarde\n [2] Boa noite\nDigite a opção: "))
     email_cliente = email_base()
     salvar_planilha(nome_cliente, cpf_cliente, email_cliente)
     print("="*60)
-    
